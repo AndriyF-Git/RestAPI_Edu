@@ -1,35 +1,36 @@
-from fastapi import FastAPI, File, UploadFile
-from fastapi.responses import FileResponse, StreamingResponse
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
 
 app = FastAPI()
 
-@app.post('/files')
-async def upload_file(uploaded_file: UploadFile):
-    file =  uploaded_file.file
-    filename = uploaded_file.filename
-    with (open(f"1_{filename}", 'wb') as f):
-        f.write(file.read())
+books = [
+    {
+        "id": 1,
+        "title": "Python Programming",
+        "author": "1", },
+    {
+        "id": 2,
+        "title": "Python Programming1",
+        "author": "2", },
+]
 
+class BookSchema(BaseModel):
+    title: str
+    author: str
 
-@app.post('/multiple_files')
-async def upload_files(uploaded_files: list[UploadFile]):
-    for uploaded_file in uploaded_files:
-        file =  uploaded_file.file
-        filename = uploaded_file.filename
-        with open(f"1_{filename}", 'wb') as f:
-            f.write(file.read())
+@app.get("/books",
+         tags=["books"],
+         summary='get all books',
+         description="<h1>Get all books</h1>")
+def get_books():
+    return books
 
-
-@app.get('/files/{filename}')
-async def get_file(filename: str):
-    return FileResponse(filename)
-
-def iterfile(filename: str):
-    with open(filename, 'rb') as file:
-        while chunk := file.read(1024 * 1024):
-            yield chunk
-
-
-@app.get('/files/streaming{filename}')
-async def get_streaming_file(filename: str):
-    return StreamingResponse(iterfile(filename), media_type='text/txt')
+@app.post("/books", tags=["books"])
+def add_book(book: BookSchema):
+    new_book_id = len(books) + 1
+    books.append({
+        "id": new_book_id,
+        "title": book.title,
+        "author": book.author,
+    })
+    return {"success": True, "message": "book added"}

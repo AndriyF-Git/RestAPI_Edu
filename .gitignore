@@ -1,3 +1,5 @@
 /.venv
 book.db
 /.idea/dbnavigator.xml
+/1_book.db
+/1_text.txt
