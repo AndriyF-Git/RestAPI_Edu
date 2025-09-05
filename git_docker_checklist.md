@@ -7,7 +7,7 @@
 |------|--------------------|--------|
 | **1. Робота з гілками** | `git branch`, `git checkout -b featureX`, `git merge`, `git rebase` | ⬜ |
 | **2. Pull requests (code review)** | Створення PR у GitHub/GitLab | ⬜ |
-| **3. Конфлікти злиття** | `git merge`, вирішення конфліктів вручну | ⬜ |
+| **3. Конфлікти злиття** | `git merge`, вирішення конфліктів вручну | ✅ |
 | **4. Історія комітів** | `git log --oneline`, `git diff`, `git blame` | ⬜ |
 | **5. Відкат змін** | `git reset --hard`, `git revert`, `git restore` | ⬜ |
 | **6. Stashing** | `git stash`, `git stash pop` | ⬜ |
